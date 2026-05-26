@@ -1,0 +1,340 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		61C41BA0D715B7167F78B870 /* HermesMonitorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B202EC24198C399A58B6EA4E /* HermesMonitorApp.swift */; };
+		24CE2B9AFD8B8DAFDBBFA7D6 /* QuestionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC28B710B47DB1DDE7154C5 /* QuestionHandler.swift */; };
+		65CF87F6CCCEE2D742CCFF80 /* FileDropHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1FF4D7B627271FFDA9746E /* FileDropHandler.swift */; };
+		BE8895FD93425E7E1C4521DE /* HermesStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F945CD6854F04FEF37E375F4 /* HermesStatus.swift */; };
+		D02E5EF6C41B7E25F619A613 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 289EC071AA245A6F4517D377 /* AppIcon.icns */; };
+		D1CEE931FDC6D3568E81021E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 555905D0C603CC6DAC57C168 /* Assets.xcassets */; };
+		FB79598379CF802DF27FE87C /* WidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB04A1C8031114ACD73C58B /* WidgetView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		289EC071AA245A6F4517D377 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
+		555905D0C603CC6DAC57C168 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9424A95BA2C8B29587A2A5E0 /* HermesMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HermesMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B202EC24198C399A58B6EA4E /* HermesMonitorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesMonitorApp.swift; sourceTree = "<group>"; };
+		BE1FF4D7B627271FFDA9746E /* FileDropHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDropHandler.swift; sourceTree = "<group>"; };
+		C71275356F95E5C3217A8703 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F945CD6854F04FEF37E375F4 /* HermesStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesStatus.swift; sourceTree = "<group>"; };
+		FFB04A1C8031114ACD73C58B /* WidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetView.swift; sourceTree = "<group>"; };
+		7FC28B710B47DB1DDE7154C5 /* QuestionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionHandler.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		458F231C423BBAE68DD8120D /* HermesMonitor */ = {
+			isa = PBXGroup;
+			children = (
+				555905D0C603CC6DAC57C168 /* Assets.xcassets */,
+				BE1FF4D7B627271FFDA9746E /* FileDropHandler.swift */,
+				B202EC24198C399A58B6EA4E /* HermesMonitorApp.swift */,
+				F945CD6854F04FEF37E375F4 /* HermesStatus.swift */,
+				C71275356F95E5C3217A8703 /* Info.plist */,
+				FFB04A1C8031114ACD73C58B /* WidgetView.swift */,
+				7FC28B710B47DB1DDE7154C5 /* QuestionHandler.swift */,
+				DB22E1ACF686D55536631A25 /* Resources */,
+			);
+			path = HermesMonitor;
+			sourceTree = "<group>";
+		};
+		9E3E5FA8AA2EE3A53A6BAD17 = {
+			isa = PBXGroup;
+			children = (
+				458F231C423BBAE68DD8120D /* HermesMonitor */,
+				FEA18CA5F9FEFB6FD22617E5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DB22E1ACF686D55536631A25 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				289EC071AA245A6F4517D377 /* AppIcon.icns */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		FEA18CA5F9FEFB6FD22617E5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9424A95BA2C8B29587A2A5E0 /* HermesMonitor.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4FC26FFC54AFAF800CA29805 /* HermesMonitor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A4BF6A28A93A7D4C35805496 /* Build configuration list for PBXNativeTarget "HermesMonitor" */;
+			buildPhases = (
+				A1DAAE6B08B461123FDB19FB /* Sources */,
+				6032AEC898BF36BDEA94308C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HermesMonitor;
+			packageProductDependencies = (
+			);
+			productName = HermesMonitor;
+			productReference = 9424A95BA2C8B29587A2A5E0 /* HermesMonitor.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E46D49823D324DDDAEF4DE83 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					4FC26FFC54AFAF800CA29805 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 21F9EF337C1A701E47C78554 /* Build configuration list for PBXProject "HermesMonitor" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 9E3E5FA8AA2EE3A53A6BAD17;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = FEA18CA5F9FEFB6FD22617E5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4FC26FFC54AFAF800CA29805 /* HermesMonitor */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6032AEC898BF36BDEA94308C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D02E5EF6C41B7E25F619A613 /* AppIcon.icns in Resources */,
+				D1CEE931FDC6D3568E81021E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A1DAAE6B08B461123FDB19FB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65CF87F6CCCEE2D742CCFF80 /* FileDropHandler.swift in Sources */,
+				61C41BA0D715B7167F78B870 /* HermesMonitorApp.swift in Sources */,
+				BE8895FD93425E7E1C4521DE /* HermesStatus.swift in Sources */,
+				FB79598379CF802DF27FE87C /* WidgetView.swift in Sources */,
+				24CE2B9AFD8B8DAFDBBFA7D6 /* QuestionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		804BFEB6F68857776791EB0C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		8FEBC1178E432C5F5E01EFCD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		C6E432C5015FEDE3A27CE439 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_FILE = HermesMonitor/Info.plist;
+				INFOPLIST_KEY_LSUIElement = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.heavry.hermes-monitor";
+				PRODUCT_NAME = "Hermes Monitor";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		CEF7706D589C3814501DBE0A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_FILE = HermesMonitor/Info.plist;
+				INFOPLIST_KEY_LSUIElement = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.heavry.hermes-monitor";
+				PRODUCT_NAME = "Hermes Monitor";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		21F9EF337C1A701E47C78554 /* Build configuration list for PBXProject "HermesMonitor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				804BFEB6F68857776791EB0C /* Debug */,
+				8FEBC1178E432C5F5E01EFCD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A4BF6A28A93A7D4C35805496 /* Build configuration list for PBXNativeTarget "HermesMonitor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEF7706D589C3814501DBE0A /* Debug */,
+				C6E432C5015FEDE3A27CE439 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E46D49823D324DDDAEF4DE83 /* Project object */;
+}
