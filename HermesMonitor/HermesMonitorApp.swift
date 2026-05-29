@@ -13,6 +13,7 @@ class AppManager: ObservableObject {
     var dropHandler = FileDropHandler()
     var questionHandler = QuestionHandler()
     var notificationManager = NotificationManager()
+    var lang = LanguageManager.shared
 
     let windowFrameKey = "hermes_monitor_window_frame"
 
@@ -113,24 +114,25 @@ struct MenuBarMenuView: View {
     @ObservedObject var app = AppManager.shared
     @ObservedObject var monitor = AppManager.shared.monitor
     @ObservedObject var notificationManager = AppManager.shared.notificationManager
+    @ObservedObject var lang = AppManager.shared.lang
 
     var body: some View {
         Button(action: { app.toggleWindow() }) {
-            Label(app.isWindowVisible ? "隐藏浮窗" : "显示浮窗",
+            Label(app.isWindowVisible ? lang.hideWindow : lang.showWindow,
                   systemImage: app.isWindowVisible ? "eye.slash" : "eye")
         }
 
         Divider()
 
         Button(action: { notificationManager.toggleMute() }) {
-            Label(notificationManager.isMuted ? "取消静音" : "静音",
+            Label(notificationManager.isMuted ? lang.unmute : lang.mute,
                   systemImage: notificationManager.isMuted ? "speaker.slash" : "speaker.wave.2")
         }
 
         Divider()
 
         if monitor.activeTasks.isEmpty {
-            Text("无进行中的任务")
+            Text(lang.noActiveTasks)
                 .foregroundColor(.secondary)
         } else {
             ForEach(monitor.activeTasks) { task in
@@ -153,11 +155,11 @@ struct MenuBarMenuView: View {
         Divider()
 
         SettingsLink {
-            Label("设置...", systemImage: "gear")
+            Label(lang.settings, systemImage: "gear")
         }
 
         Button(action: { NSApp.terminate(nil) }) {
-            Label("退出", systemImage: "power")
+            Label(lang.quit, systemImage: "power")
         }
     }
 }

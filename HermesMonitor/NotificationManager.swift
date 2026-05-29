@@ -46,7 +46,7 @@ class NotificationManager: ObservableObject {
 
         // Show system notification
         let content = UNMutableNotificationContent()
-        content.title = "任务完成"
+        content.title = LanguageManager.shared.taskCompleted
         content.body = task.task.count > 50 ? String(task.task.prefix(50)) + "..." : task.task
         content.sound = isMuted ? nil : .default
 

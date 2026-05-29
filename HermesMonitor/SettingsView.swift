@@ -3,6 +3,7 @@ import SwiftUI
 struct SettingsView: View {
     @ObservedObject var app = AppManager.shared
     @ObservedObject var notificationManager = AppManager.shared.notificationManager
+    @ObservedObject var lang = AppManager.shared.lang
 
     @AppStorage("hermes_monitor_auto_hide") private var autoHide = false
 
@@ -10,12 +11,12 @@ struct SettingsView: View {
         TabView {
             GeneralSettingsTab()
                 .tabItem {
-                    Label("通用", systemImage: "gear")
+                    Label(lang.generalTab, systemImage: "gear")
                 }
 
             AboutTab()
                 .tabItem {
-                    Label("关于", systemImage: "info.circle")
+                    Label(lang.aboutTab, systemImage: "info.circle")
                 }
         }
         .frame(width: 400, height: 280)
@@ -27,31 +28,41 @@ struct SettingsView: View {
 struct GeneralSettingsTab: View {
     @ObservedObject var app = AppManager.shared
     @ObservedObject var notificationManager = AppManager.shared.notificationManager
+    @ObservedObject var lang = AppManager.shared.lang
     @AppStorage("hermes_monitor_auto_hide") private var autoHide = false
 
     var body: some View {
         Form {
             Section {
-                Toggle("无任务时自动隐藏浮窗", isOn: $autoHide)
+                Toggle(lang.autoHideLabel, isOn: $autoHide)
                     .onChange(of: autoHide) { _ in
                         app.autoHideCheck()
                     }
 
-                Toggle("任务完成时静音", isOn: $notificationManager.isMuted)
+                Toggle(lang.muteLabel, isOn: $notificationManager.isMuted)
             } header: {
-                Text("行为")
+                Text(lang.behaviorSection)
+            }
+
+            Section {
+                Picker(lang.languageLabel, selection: $lang.currentLanguage) {
+                    Text("中文").tag("zh")
+                    Text("English").tag("en")
+                }
+            } header: {
+                Text(lang.languageLabel)
             }
 
             Section {
                 HStack {
-                    Text("浮窗位置")
+                    Text(lang.windowPosition)
                     Spacer()
-                    Button("重置为默认") {
+                    Button(lang.resetToDefault) {
                         app.resetWindowPosition()
                     }
                 }
             } header: {
-                Text("窗口")
+                Text(lang.windowSection)
             }
         }
         .formStyle(.grouped)
@@ -62,6 +73,8 @@ struct GeneralSettingsTab: View {
 // MARK: - About Tab
 
 struct AboutTab: View {
+    @ObservedObject var lang = AppManager.shared.lang
+
     var body: some View {
         VStack(spacing: 16) {
             Image(systemName: "sparkle")
@@ -75,7 +88,7 @@ struct AboutTab: View {
                 .font(.system(size: 13, design: .monospaced))
                 .foregroundColor(.secondary)
 
-            Text("macOS 浮窗桌面组件\n实时监控 Hermes Agent 任务状态")
+            Text(lang.appDescription)
                 .font(.system(size: 12))
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)

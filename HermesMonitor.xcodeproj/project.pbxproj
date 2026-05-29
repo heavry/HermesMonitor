@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		34592DADCF0C125AD5C38F7F /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5769893F949403C487D1F41F /* LanguageManager.swift */; };
 		418FE3EFDC85659DF34334B5 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21877B3B77A956F9EAE5F0D7 /* NotificationManager.swift */; };
 		5C1F8DB77AE2B1B799D52CF9 /* QuestionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0467F7E85D2861F89591251E /* QuestionHandler.swift */; };
 		61C41BA0D715B7167F78B870 /* HermesMonitorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B202EC24198C399A58B6EA4E /* HermesMonitorApp.swift */; };
@@ -23,6 +24,7 @@
 		21877B3B77A956F9EAE5F0D7 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		289EC071AA245A6F4517D377 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
 		555905D0C603CC6DAC57C168 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5769893F949403C487D1F41F /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
 		9424A95BA2C8B29587A2A5E0 /* HermesMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HermesMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B202EC24198C399A58B6EA4E /* HermesMonitorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesMonitorApp.swift; sourceTree = "<group>"; };
 		BE1FF4D7B627271FFDA9746E /* FileDropHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDropHandler.swift; sourceTree = "<group>"; };
@@ -41,6 +43,7 @@
 				B202EC24198C399A58B6EA4E /* HermesMonitorApp.swift */,
 				F945CD6854F04FEF37E375F4 /* HermesStatus.swift */,
 				C71275356F95E5C3217A8703 /* Info.plist */,
+				5769893F949403C487D1F41F /* LanguageManager.swift */,
 				21877B3B77A956F9EAE5F0D7 /* NotificationManager.swift */,
 				0467F7E85D2861F89591251E /* QuestionHandler.swift */,
 				C39943C2EAAA6D63C78E067E /* SettingsView.swift */,
@@ -148,6 +151,7 @@
 				65CF87F6CCCEE2D742CCFF80 /* FileDropHandler.swift in Sources */,
 				61C41BA0D715B7167F78B870 /* HermesMonitorApp.swift in Sources */,
 				BE8895FD93425E7E1C4521DE /* HermesStatus.swift in Sources */,
+				34592DADCF0C125AD5C38F7F /* LanguageManager.swift in Sources */,
 				418FE3EFDC85659DF34334B5 /* NotificationManager.swift in Sources */,
 				5C1F8DB77AE2B1B799D52CF9 /* QuestionHandler.swift in Sources */,
 				94C19E2C1184E78C18C019CE /* SettingsView.swift in Sources */,

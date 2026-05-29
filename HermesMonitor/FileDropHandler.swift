@@ -36,7 +36,7 @@ class FileDropHandler: ObservableObject {
         guard hasHermes else {
             DispatchQueue.main.async {
                 self.isDropping = false
-                self.error = "找不到 hermes 二进制，请确认已安装"
+                self.error = LanguageManager.shared.hermesNotFound
             }
             return
         }

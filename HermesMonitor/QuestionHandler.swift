@@ -60,7 +60,7 @@ class QuestionHandler: ObservableObject {
         guard !q.isEmpty else { return }
 
         guard hasHermes else {
-            error = "找不到 hermes 二进制，请确认已安装"
+            error = LanguageManager.shared.hermesNotFound
             return
         }
 

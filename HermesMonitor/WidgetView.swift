@@ -6,6 +6,7 @@ struct WidgetView: View {
     @EnvironmentObject var dropHandler: FileDropHandler
     @EnvironmentObject var questionHandler: QuestionHandler
     @EnvironmentObject var notificationManager: NotificationManager
+    @ObservedObject var lang = AppManager.shared.lang
     @State private var isHovering = false
     @State private var showList = false
     @State private var isRefreshing = false
@@ -83,13 +84,13 @@ struct WidgetView: View {
                     .font(.system(size: 24))
                     .foregroundColor(.red)
 
-                Text("确定退出 Hermes Monitor？")
+                Text(lang.confirmQuitTitle)
                     .font(.system(size: 13, weight: .semibold, design: .rounded))
                     .foregroundColor(.primary)
 
                 HStack(spacing: 16) {
                     Button(action: { withAnimation { showQuitConfirm = false } }) {
-                        Text("取消")
+                        Text(lang.cancel)
                             .font(.system(size: 12, weight: .medium, design: .rounded))
                             .padding(.horizontal, 20)
                             .padding(.vertical, 6)
@@ -98,7 +99,7 @@ struct WidgetView: View {
                     .buttonStyle(.plain)
 
                     Button(action: { NSApp.terminate(nil) }) {
-                        Text("退出")
+                        Text(lang.quit)
                             .font(.system(size: 12, weight: .semibold, design: .rounded))
                             .foregroundColor(.white)
                             .padding(.horizontal, 20)
@@ -159,7 +160,7 @@ struct WidgetView: View {
                 Image(systemName: "arrow.down.doc.fill")
                     .font(.system(size: 28))
                     .foregroundColor(.accentColor)
-                Text("松开发送给 Hermes")
+                Text(lang.dropToSend)
                     .font(.system(size: 13, weight: .semibold, design: .rounded))
                     .foregroundColor(.accentColor)
             }
@@ -188,7 +189,7 @@ struct WidgetView: View {
                     HStack(spacing: 3) {
                         Image(systemName: "chevron.left")
                             .font(.system(size: 10, weight: .semibold))
-                        Text("返回")
+                        Text(lang.back)
                             .font(.system(size: 10, weight: .medium, design: .rounded))
                     }
                     .padding(.horizontal, 8)
@@ -208,7 +209,7 @@ struct WidgetView: View {
                     Spacer()
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: .accentColor))
-                    Text("Hermes 正在阅读...")
+                    Text(lang.reading)
                         .font(.system(size: 12, design: .rounded))
                         .foregroundColor(.secondary)
                     Spacer()
@@ -220,7 +221,7 @@ struct WidgetView: View {
                             Image(systemName: "tag.fill")
                                 .font(.system(size: 9))
                                 .foregroundColor(.purple)
-                            Text("关键词")
+                            Text(lang.keywordLabel)
                                 .font(.system(size: 9, design: .rounded))
                                 .foregroundColor(.secondary)
                             Text(kw)
@@ -238,7 +239,7 @@ struct WidgetView: View {
                                     .foregroundColor(.secondary.opacity(0.6))
                             }
                             .buttonStyle(.plain)
-                            .help("复制关键词")
+                            .help(lang.copyKeyword)
                         }
                         .padding(.horizontal, 14)
                         .padding(.vertical, 6)
@@ -249,7 +250,7 @@ struct WidgetView: View {
                         .padding(.horizontal, 14)
                         .padding(.top, 8)
 
-                        Text("跟 Hermes 说这个关键词可继续分析")
+                        Text(lang.keywordHint)
                             .font(.system(size: 9, design: .rounded))
                             .foregroundColor(.secondary.opacity(0.5))
                             .padding(.top, 3)
@@ -270,7 +271,7 @@ struct WidgetView: View {
                     Image(systemName: "exclamationmark.triangle")
                         .font(.system(size: 20))
                         .foregroundColor(.orange)
-                    Text("无法读取")
+                    Text(lang.cannotRead)
                         .font(.system(size: 12))
                         .foregroundColor(.secondary)
                     Spacer()
@@ -308,7 +309,7 @@ struct WidgetView: View {
                 Image(systemName: "antenna.radiowaves.left.and.right.slash")
                     .font(.system(size: 10))
                     .foregroundColor(.orange.opacity(0.7))
-                    .help("Watcher 离线，正在尝试重启...")
+                    .help("Watcher offline, retrying...")
             }
 
             // Mute button
@@ -318,7 +319,7 @@ struct WidgetView: View {
                     .foregroundColor(notificationManager.isMuted ? .red.opacity(0.7) : .secondary.opacity(0.6))
             }
             .buttonStyle(.plain)
-            .help(notificationManager.isMuted ? "已静音，点击取消" : "点击静音")
+            .help(notificationManager.isMuted ? lang.mutedHint : lang.clickToMute)
 
             // Refresh button
             Button(action: {
@@ -414,7 +415,7 @@ struct WidgetView: View {
                 }
 
                 if task.toolCall != nil {
-                    Text(monitor.formatToolName(task.toolCall))
+                    Text(lang.toolName(task.toolCall))
                         .font(.system(size: 10, design: .rounded))
                         .foregroundColor(.secondary)
                 }
@@ -428,14 +429,14 @@ struct WidgetView: View {
 
                 HStack(spacing: 6) {
                     Circle().fill(Color.green).frame(width: 6, height: 6)
-                    Text("进行中")
+                    Text(lang.inProgress)
                         .font(.system(size: 10, weight: .medium, design: .rounded))
                         .foregroundColor(.green)
                 }
 
                 VStack(spacing: 4) {
                     HStack {
-                        Text("进度")
+                        Text(lang.progress)
                             .font(.system(size: 9, weight: .medium, design: .rounded))
                             .foregroundColor(.secondary)
                         Spacer()
@@ -467,7 +468,7 @@ struct WidgetView: View {
             } else {
                 HStack(spacing: 6) {
                     Circle().fill(Color.gray).frame(width: 6, height: 6)
-                    Text("已结束")
+                    Text(lang.ended)
                         .font(.system(size: 10, weight: .medium, design: .rounded))
                         .foregroundColor(.secondary)
                 }
@@ -476,7 +477,7 @@ struct WidgetView: View {
             HStack(spacing: 4) {
                 Image(systemName: "arrow.down.doc")
                     .font(.system(size: 9))
-                Text("拖拽文件到此处发送给 Hermes")
+                Text(lang.dropFileHint)
                     .font(.system(size: 9, design: .rounded))
             }
             .foregroundColor(.secondary.opacity(0.4))
@@ -495,7 +496,7 @@ struct WidgetView: View {
                     Image(systemName: questionHandler.isShowing ? "questionmark.circle.fill" : "questionmark.circle")
                         .font(.system(size: 12))
                         .foregroundColor(.cyan)
-                    Text(questionHandler.isShowing ? "收起提问" : "提问：卡在哪了？")
+                    Text(questionHandler.isShowing ? lang.collapseAsk : lang.askButton)
                         .font(.system(size: 11, weight: .medium, design: .rounded))
                         .foregroundColor(.cyan)
                     Spacer()
@@ -523,7 +524,7 @@ struct WidgetView: View {
                 Image(systemName: "list.bullet")
                     .font(.system(size: 12))
                     .foregroundColor(.accentColor)
-                Text("所有任务 (\(monitor.tasks.count))")
+                Text(lang.allTasks + " (\(monitor.tasks.count))")
                     .font(.system(size: 12, weight: .semibold, design: .rounded))
                 Spacer()
                 Button(action: { withAnimation { showList = false } }) {
@@ -576,12 +577,12 @@ struct WidgetView: View {
                     HStack(spacing: 4) {
                         if task.active {
                             Circle().fill(Color.green).frame(width: 5, height: 5)
-                            Text(monitor.formatToolName(task.toolCall))
+                            Text(lang.toolName(task.toolCall))
                                 .font(.system(size: 9, design: .rounded))
                                 .foregroundColor(.green)
                         } else {
                             Circle().fill(Color.gray).frame(width: 5, height: 5)
-                            Text("已结束")
+                            Text(lang.ended)
                                 .font(.system(size: 9, design: .rounded))
                                 .foregroundColor(.secondary)
                         }
@@ -622,7 +623,7 @@ struct WidgetView: View {
                 Image(systemName: "moon.zzz.fill")
                     .font(.system(size: 14))
                     .foregroundColor(.secondary.opacity(0.4))
-                Text("等待任务...")
+                Text(lang.waitingForTasks)
                     .font(.system(size: 11, design: .rounded))
                     .foregroundColor(.secondary)
             }
@@ -633,7 +634,7 @@ struct WidgetView: View {
     private var questionInputView: some View {
         VStack(spacing: 8) {
             HStack(spacing: 6) {
-                TextField("问 Hermes 当前情况...", text: $questionHandler.questionText)
+                TextField(lang.askPlaceholder, text: $questionHandler.questionText)
                     .textFieldStyle(.plain)
                     .font(.system(size: 11, design: .rounded))
                     .onSubmit {
@@ -700,9 +701,9 @@ struct WidgetView: View {
     private var headerTitle: String {
         let active = monitor.activeTasks.count
         let total = monitor.tasks.count
-        if total == 0 { return "Hermes 空闲" }
-        if total == 1 { return monitor.tasks[0].active ? "Hermes 工作中" : "Hermes 空闲" }
-        return "Hermes \(active)/\(total) 活跃"
+        if total == 0 { return lang.hermesIdle }
+        if total == 1 { return monitor.tasks[0].active ? lang.hermesWorking : lang.hermesIdle }
+        return lang.hermesActive(active, total)
     }
 
     private var borderColor: Color {
