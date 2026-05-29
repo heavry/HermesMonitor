@@ -64,8 +64,8 @@ class StatusMonitor: ObservableObject {
         readStatus()
         setupFileMonitor()
 
-        // Fallback timer: only fires every 10s as safety net for missed events
-        timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { [weak self] _ in
+        // Fallback timer: 2s polling as safety net alongside DispatchSource
+        timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self] _ in
             self?.readStatus()
         }
     }
