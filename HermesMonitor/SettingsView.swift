@@ -33,6 +33,9 @@ struct GeneralSettingsTab: View {
         Form {
             Section {
                 Toggle("无任务时自动隐藏浮窗", isOn: $autoHide)
+                    .onChange(of: autoHide) { _ in
+                        NotificationCenter.default.post(name: .autoHideSettingChanged, object: nil)
+                    }
 
                 Toggle("任务完成时静音", isOn: $notificationManager.isMuted)
             } header: {

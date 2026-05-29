@@ -220,10 +220,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             name: .resizeWidget, object: nil
         )
 
-        // Auto-hide check
+        // Auto-hide check + listen for setting change
         Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { [weak self] _ in
             self?.autoHideCheck()
         }
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(autoHideCheckNow),
+            name: .autoHideSettingChanged, object: nil
+        )
     }
 
     @objc private func windowDidMove() {
@@ -243,6 +247,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard UserDefaults.standard.bool(forKey: "hermes_monitor_auto_hide") else { return }
         if monitor.tasks.isEmpty && appManager.isWindowVisible {
             hideWindowAnimated()
+        }
+    }
+
+    @objc private func autoHideCheckNow() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            self?.autoHideCheck()
         }
     }
 
@@ -300,4 +310,5 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 extension Notification.Name {
     static let resizeWidget = Notification.Name("resizeWidget")
+    static let autoHideSettingChanged = Notification.Name("autoHideSettingChanged")
 }
