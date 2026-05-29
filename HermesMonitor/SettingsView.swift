@@ -1,15 +1,14 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @EnvironmentObject var notificationManager: NotificationManager
-    @EnvironmentObject var appManager: AppManager
+    @ObservedObject var app = AppManager.shared
+    @ObservedObject var notificationManager = AppManager.shared.notificationManager
 
     @AppStorage("hermes_monitor_auto_hide") private var autoHide = false
 
     var body: some View {
         TabView {
             GeneralSettingsTab()
-                .environmentObject(notificationManager)
                 .tabItem {
                     Label("通用", systemImage: "gear")
                 }
@@ -26,7 +25,8 @@ struct SettingsView: View {
 // MARK: - General Settings
 
 struct GeneralSettingsTab: View {
-    @EnvironmentObject var notificationManager: NotificationManager
+    @ObservedObject var app = AppManager.shared
+    @ObservedObject var notificationManager = AppManager.shared.notificationManager
     @AppStorage("hermes_monitor_auto_hide") private var autoHide = false
 
     var body: some View {
@@ -34,7 +34,7 @@ struct GeneralSettingsTab: View {
             Section {
                 Toggle("无任务时自动隐藏浮窗", isOn: $autoHide)
                     .onChange(of: autoHide) { _ in
-                        NotificationCenter.default.post(name: .autoHideSettingChanged, object: nil)
+                        app.autoHideCheck()
                     }
 
                 Toggle("任务完成时静音", isOn: $notificationManager.isMuted)
@@ -47,7 +47,7 @@ struct GeneralSettingsTab: View {
                     Text("浮窗位置")
                     Spacer()
                     Button("重置为默认") {
-                        UserDefaults.standard.removeObject(forKey: "hermes_monitor_window_frame")
+                        app.resetWindowPosition()
                     }
                 }
             } header: {

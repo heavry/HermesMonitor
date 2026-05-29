@@ -1,56 +1,93 @@
 import SwiftUI
 import AppKit
 
-@main
-struct HermesMonitorApp: App {
-    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    @StateObject var notificationManager = NotificationManager()
-    @StateObject var appManager = AppManager()
-
-    var body: some Scene {
-        // Menu bar icon
-        MenuBarExtra {
-            MenuBarMenuView()
-                .environmentObject(appDelegate.monitor)
-                .environmentObject(notificationManager)
-                .environmentObject(appManager)
-        } label: {
-            MenuBarIcon()
-                .environmentObject(appDelegate.monitor)
-        }
-
-        // Settings window
-        Settings {
-            SettingsView()
-                .environmentObject(notificationManager)
-                .environmentObject(appManager)
-        }
-    }
-}
-
-// MARK: - App Manager (shared state for window control)
+// MARK: - Shared App Manager
 
 class AppManager: ObservableObject {
+    static let shared = AppManager()
+
     @Published var isWindowVisible: Bool = true
-    var appDelegate: AppDelegate?
+
+    var floatingWindow: FloatingWindow?
+    var monitor = StatusMonitor()
+    var dropHandler = FileDropHandler()
+    var questionHandler = QuestionHandler()
+    var notificationManager = NotificationManager()
+
+    let windowFrameKey = "hermes_monitor_window_frame"
+
+    init() {
+        monitor.notificationManager = notificationManager
+    }
+
+    // MARK: - Window visibility
 
     func toggleWindow() {
-        appDelegate?.toggleWindow()
+        if isWindowVisible {
+            hideWindow()
+        } else {
+            showWindow()
+        }
     }
 
     func showWindow() {
-        appDelegate?.showWindow()
+        guard let win = floatingWindow else { return }
+        win.alphaValue = 0
+        win.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
+        isWindowVisible = true
+        NSAnimationContext.runAnimationGroup { ctx in
+            ctx.duration = 0.25
+            win.animator().alphaValue = 1
+        }
+    }
+
+    func hideWindow() {
+        guard let win = floatingWindow else { return }
+        NSAnimationContext.runAnimationGroup({ ctx in
+            ctx.duration = 0.25
+            win.animator().alphaValue = 0
+        }, completionHandler: { [weak self] in
+            win.orderOut(nil)
+            self?.isWindowVisible = false
+        })
+    }
+
+    func autoHideCheck() {
+        guard UserDefaults.standard.bool(forKey: "hermes_monitor_auto_hide") else { return }
+        if monitor.tasks.isEmpty && isWindowVisible {
+            hideWindow()
+        }
     }
 
     func resetWindowPosition() {
-        UserDefaults.standard.removeObject(forKey: "hermes_monitor_window_frame")
+        UserDefaults.standard.removeObject(forKey: windowFrameKey)
+    }
+}
+
+// MARK: - App Entry
+
+@main
+struct HermesMonitorApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
+    var body: some Scene {
+        MenuBarExtra {
+            MenuBarMenuView()
+        } label: {
+            MenuBarIcon()
+        }
+
+        Settings {
+            SettingsView()
+        }
     }
 }
 
 // MARK: - Menu Bar Icon
 
 struct MenuBarIcon: View {
-    @EnvironmentObject var monitor: StatusMonitor
+    @ObservedObject var monitor = AppManager.shared.monitor
 
     var body: some View {
         HStack(spacing: 4) {
@@ -73,14 +110,14 @@ struct MenuBarIcon: View {
 // MARK: - Menu Bar Menu
 
 struct MenuBarMenuView: View {
-    @EnvironmentObject var monitor: StatusMonitor
-    @EnvironmentObject var notificationManager: NotificationManager
-    @EnvironmentObject var appManager: AppManager
+    @ObservedObject var app = AppManager.shared
+    @ObservedObject var monitor = AppManager.shared.monitor
+    @ObservedObject var notificationManager = AppManager.shared.notificationManager
 
     var body: some View {
-        Button(action: { appManager.toggleWindow() }) {
-            Label(appManager.isWindowVisible ? "隐藏浮窗" : "显示浮窗",
-                  systemImage: appManager.isWindowVisible ? "eye.slash" : "eye")
+        Button(action: { app.toggleWindow() }) {
+            Label(app.isWindowVisible ? "隐藏浮窗" : "显示浮窗",
+                  systemImage: app.isWindowVisible ? "eye.slash" : "eye")
         }
 
         Divider()
@@ -99,7 +136,7 @@ struct MenuBarMenuView: View {
             ForEach(monitor.activeTasks) { task in
                 Button(action: {
                     monitor.selectTask(task.sessionId)
-                    appManager.showWindow()
+                    app.showWindow()
                 }) {
                     HStack {
                         Circle().fill(Color.green).frame(width: 6, height: 6)
@@ -134,26 +171,14 @@ class FloatingWindow: NSWindow {
 // MARK: - App Delegate
 
 class AppDelegate: NSObject, NSApplicationDelegate {
-    var floatingWindow: FloatingWindow!
     var hostingView: NSHostingView<AnyView>!
-    var monitor = StatusMonitor()
-    var dropHandler = FileDropHandler()
-    var questionHandler = QuestionHandler()
-    var notificationManager = NotificationManager()
-    var appManager = AppManager()
-
-    private let windowFrameKey = "hermes_monitor_window_frame"
+    let app = AppManager.shared
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // Wire up managers
-        monitor.notificationManager = notificationManager
-        appManager.appDelegate = self
-
         setupFloatingWindow()
 
-        // Auto-hide if no tasks on launch
-        if monitor.tasks.isEmpty && UserDefaults.standard.bool(forKey: "hermes_monitor_auto_hide") {
-            hideWindowAnimated()
+        if app.monitor.tasks.isEmpty && UserDefaults.standard.bool(forKey: "hermes_monitor_auto_hide") {
+            app.hideWindow()
         }
     }
 
@@ -161,9 +186,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let width: CGFloat = 320
         let height: CGFloat = 200
 
-        // Restore saved position or use default
         let frame: NSRect
-        if let saved = UserDefaults.standard.string(forKey: windowFrameKey),
+        if let saved = UserDefaults.standard.string(forKey: app.windowFrameKey),
            let data = saved.data(using: .utf8),
            let dict = try? JSONSerialization.jsonObject(with: data) as? [String: CGFloat],
            let x = dict["x"], let y = dict["y"], let w = dict["w"], let h = dict["h"] {
@@ -177,41 +201,42 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             )
         }
 
-        floatingWindow = FloatingWindow(
+        let win = FloatingWindow(
             contentRect: frame,
             styleMask: [.borderless],
             backing: .buffered,
             defer: false
         )
 
-        floatingWindow.isOpaque = false
-        floatingWindow.backgroundColor = .clear
-        floatingWindow.hasShadow = true
-        floatingWindow.level = .floating
-        floatingWindow.collectionBehavior = [.canJoinAllSpaces, .stationary]
-        floatingWindow.isMovableByWindowBackground = true
-        floatingWindow.animationBehavior = .utilityWindow
-        floatingWindow.registerForDraggedTypes([.fileURL])
+        win.isOpaque = false
+        win.backgroundColor = .clear
+        win.hasShadow = true
+        win.level = .floating
+        win.collectionBehavior = [.canJoinAllSpaces, .stationary]
+        win.isMovableByWindowBackground = true
+        win.animationBehavior = .utilityWindow
+        win.registerForDraggedTypes([.fileURL])
 
         hostingView = NSHostingView(
             rootView: AnyView(
                 WidgetView()
-                    .environmentObject(monitor)
-                    .environmentObject(dropHandler)
-                    .environmentObject(questionHandler)
-                    .environmentObject(notificationManager)
+                    .environmentObject(app.monitor)
+                    .environmentObject(app.dropHandler)
+                    .environmentObject(app.questionHandler)
+                    .environmentObject(app.notificationManager)
             )
         )
 
-        floatingWindow.contentView = hostingView
-        floatingWindow.makeKeyAndOrderFront(nil)
+        win.contentView = hostingView
+        win.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
-        appManager.isWindowVisible = true
+        app.floatingWindow = win
+        app.isWindowVisible = true
 
         // Save window position on move
         NotificationCenter.default.addObserver(
             self, selector: #selector(windowDidMove),
-            name: NSWindow.didMoveNotification, object: floatingWindow
+            name: NSWindow.didMoveNotification, object: win
         )
 
         // Listen for resize requests
@@ -220,87 +245,36 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             name: .resizeWidget, object: nil
         )
 
-        // Auto-hide check + listen for setting change
+        // Auto-hide check every 3s
         Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { [weak self] _ in
-            self?.autoHideCheck()
+            self?.app.autoHideCheck()
         }
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(autoHideCheckNow),
-            name: .autoHideSettingChanged, object: nil
-        )
     }
 
     @objc private func windowDidMove() {
-        saveWindowFrame()
-    }
-
-    private func saveWindowFrame() {
-        let f = floatingWindow.frame
+        guard let win = app.floatingWindow else { return }
+        let f = win.frame
         let dict: [String: CGFloat] = ["x": f.origin.x, "y": f.origin.y, "w": f.width, "h": f.height]
         if let data = try? JSONSerialization.data(withJSONObject: dict),
            let str = String(data: data, encoding: .utf8) {
-            UserDefaults.standard.set(str, forKey: windowFrameKey)
+            UserDefaults.standard.set(str, forKey: app.windowFrameKey)
         }
-    }
-
-    private func autoHideCheck() {
-        guard UserDefaults.standard.bool(forKey: "hermes_monitor_auto_hide") else { return }
-        if monitor.tasks.isEmpty && appManager.isWindowVisible {
-            hideWindowAnimated()
-        }
-    }
-
-    @objc private func autoHideCheckNow() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-            self?.autoHideCheck()
-        }
-    }
-
-    // MARK: - Window visibility
-
-    func toggleWindow() {
-        if appManager.isWindowVisible {
-            hideWindowAnimated()
-        } else {
-            showWindow()
-        }
-    }
-
-    func showWindow() {
-        floatingWindow.alphaValue = 0
-        floatingWindow.makeKeyAndOrderFront(nil)
-        NSApp.activate(ignoringOtherApps: true)
-        appManager.isWindowVisible = true
-        NSAnimationContext.runAnimationGroup { ctx in
-            ctx.duration = 0.25
-            floatingWindow.animator().alphaValue = 1
-        }
-    }
-
-    func hideWindowAnimated() {
-        NSAnimationContext.runAnimationGroup({ ctx in
-            ctx.duration = 0.25
-            floatingWindow.animator().alphaValue = 0
-        }, completionHandler: { [weak self] in
-            self?.floatingWindow.orderOut(nil)
-            self?.appManager.isWindowVisible = false
-        })
     }
 
     @objc private func resizeWindow() {
-        guard let screen = floatingWindow.screen else { return }
+        guard let win = app.floatingWindow, let screen = win.screen else { return }
         let fittingSize = hostingView.fittingSize
         let width: CGFloat = 320
         let height = max(200, fittingSize.height)
 
         let screenFrame = screen.visibleFrame
-        let currentFrame = floatingWindow.frame
+        let currentFrame = win.frame
         let newY = currentFrame.maxY - height
         let clampedY = max(screenFrame.minY, newY)
 
         NSAnimationContext.runAnimationGroup { ctx in
             ctx.duration = 0.2
-            floatingWindow.animator().setFrame(
+            win.animator().setFrame(
                 NSRect(x: currentFrame.origin.x, y: clampedY, width: width, height: height),
                 display: true
             )
@@ -310,5 +284,4 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 extension Notification.Name {
     static let resizeWidget = Notification.Name("resizeWidget")
-    static let autoHideSettingChanged = Notification.Name("autoHideSettingChanged")
 }
