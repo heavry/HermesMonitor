@@ -367,6 +367,7 @@ struct WidgetView: View {
     }
 
     @State private var pulse = false
+    @State private var completedTaskProgress: [String: Double] = [:]
 
     // MARK: - Single Task View
     private var singleTaskView: some View {
@@ -466,12 +467,35 @@ struct WidgetView: View {
                     .frame(height: 5)
                 }
             } else {
-                HStack(spacing: 6) {
-                    Circle().fill(Color.gray).frame(width: 6, height: 6)
-                    Text(lang.ended)
-                        .font(.system(size: 10, weight: .medium, design: .rounded))
-                        .foregroundColor(.secondary)
+                // Completion animation
+                VStack(alignment: .leading, spacing: 6) {
+                    HStack(spacing: 6) {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.system(size: 12))
+                            .foregroundColor(.green)
+                            .scaleEffect(taskJustCompleted(task) ? 1.3 : 1.0)
+                            .animation(.spring(response: 0.4, dampingFraction: 0.5), value: taskJustCompleted(task))
+                        Text(lang.ended)
+                            .font(.system(size: 10, weight: .medium, design: .rounded))
+                            .foregroundColor(.green)
+                    }
+
+                    // Animate progress bar to 100% green
+                    GeometryReader { geo in
+                        ZStack(alignment: .leading) {
+                            RoundedRectangle(cornerRadius: 3)
+                                .fill(Color.gray.opacity(0.15))
+                                .frame(height: 5)
+
+                            RoundedRectangle(cornerRadius: 3)
+                                .fill(Color.green)
+                                .frame(width: geo.size.width * CGFloat(taskCompletionProgress(task)), height: 5)
+                                .animation(.easeInOut(duration: 0.8), value: taskCompletionProgress(task))
+                        }
+                    }
+                    .frame(height: 5)
                 }
+                .onAppear { triggerCompletionAnimation(for: task) }
             }
 
             HStack(spacing: 4) {
@@ -689,6 +713,37 @@ struct WidgetView: View {
             }
         }
         .padding(.top, 6)
+    }
+
+    // MARK: - Completion Animation Helpers
+
+    private func taskJustCompleted(_ task: TaskInfo) -> Bool {
+        guard !task.active else { return false }
+        let progress = completedTaskProgress[task.sessionId] ?? 0
+        return progress >= 1.0
+    }
+
+    private func taskCompletionProgress(_ task: TaskInfo) -> Double {
+        completedTaskProgress[task.sessionId] ?? 0
+    }
+
+    private func triggerCompletionAnimation(for task: TaskInfo) {
+        let id = task.sessionId
+        // Start from the task's last known progress
+        let startProgress = task.progressValue
+        completedTaskProgress[id] = startProgress
+
+        // Animate to 100% with a slight delay for visual effect
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            withAnimation(.easeInOut(duration: 0.8)) {
+                completedTaskProgress[id] = 1.0
+            }
+        }
+
+        // Bounce the checkmark after progress completes
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            completedTaskProgress[id] = 1.0 // keep at 1.0
+        }
     }
 
     // MARK: - Helpers
