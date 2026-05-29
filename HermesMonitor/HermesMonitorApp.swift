@@ -7,8 +7,10 @@ class AppManager: ObservableObject {
     static let shared = AppManager()
 
     @Published var isWindowVisible: Bool = true
+    @Published var showSettings: Bool = false
 
     var floatingWindow: FloatingWindow?
+    var settingsWindow: NSWindow?
     var monitor = StatusMonitor()
     var dropHandler = FileDropHandler()
     var questionHandler = QuestionHandler()
@@ -64,6 +66,32 @@ class AppManager: ObservableObject {
     func resetWindowPosition() {
         UserDefaults.standard.removeObject(forKey: windowFrameKey)
     }
+
+    func openSettings() {
+        if let win = settingsWindow, win.isVisible {
+            win.makeKeyAndOrderFront(nil)
+            NSApp.activate(ignoringOtherApps: true)
+            return
+        }
+
+        let settingsView = NSHostingView(rootView: AnyView(
+            SettingsView()
+        ))
+
+        let win = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 400, height: 300),
+            styleMask: [.titled, .closable],
+            backing: .buffered,
+            defer: false
+        )
+        win.title = LanguageManager.shared.settings.replacingOccurrences(of: "...", with: "")
+        win.contentView = settingsView
+        win.center()
+        win.isReleasedWhenClosed = false
+        win.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
+        settingsWindow = win
+    }
 }
 
 // MARK: - App Entry
@@ -77,10 +105,6 @@ struct HermesMonitorApp: App {
             MenuBarMenuView()
         } label: {
             MenuBarIcon()
-        }
-
-        Settings {
-            SettingsView()
         }
     }
 }
@@ -154,7 +178,7 @@ struct MenuBarMenuView: View {
 
         Divider()
 
-        SettingsLink {
+        Button(action: { app.openSettings() }) {
             Label(lang.settings, systemImage: "gear")
         }
 
