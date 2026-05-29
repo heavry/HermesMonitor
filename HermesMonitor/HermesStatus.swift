@@ -36,6 +36,9 @@ class StatusMonitor: ObservableObject {
     private var monitoredFD: Int32 = -1
     private let statusPath = NSHomeDirectory() + "/.hermes/status.json"
 
+    // Notification manager reference (set by AppDelegate)
+    var notificationManager: NotificationManager?
+
     init() {
         readStatus()
         startMonitoring()
@@ -55,13 +58,14 @@ class StatusMonitor: ObservableObject {
         selectedTaskId = id
     }
 
-    // MARK: - File Monitoring with fd rebuild
+    // MARK: - File Monitoring (event-driven, no polling timer)
 
     func startMonitoring() {
         readStatus()
         setupFileMonitor()
 
-        timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true) { [weak self] _ in
+        // Fallback timer: only fires every 10s as safety net for missed events
+        timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { [weak self] _ in
             self?.readStatus()
         }
     }
@@ -148,15 +152,19 @@ class StatusMonitor: ObservableObject {
         proc.processIdentifier // detach — don't wait
     }
 
-    // MARK: - Status Reading with auto-switch
+    // MARK: - Status Reading with auto-switch and completion detection
 
     private func readStatus() {
         guard let data = FileManager.default.contents(atPath: statusPath),
               let s = try? JSONDecoder().decode(MultiStatus.self, from: data)
         else { return }
         DispatchQueue.main.async {
+            let previousTasks = self.status.tasks
             self.status = s
             self.autoSelectTask()
+
+            // Check for newly completed tasks
+            self.notificationManager?.checkForCompletedTasks(tasks: s.tasks)
         }
     }
 

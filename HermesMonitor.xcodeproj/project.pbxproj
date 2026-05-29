@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		418FE3EFDC85659DF34334B5 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21877B3B77A956F9EAE5F0D7 /* NotificationManager.swift */; };
+		5C1F8DB77AE2B1B799D52CF9 /* QuestionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0467F7E85D2861F89591251E /* QuestionHandler.swift */; };
 		61C41BA0D715B7167F78B870 /* HermesMonitorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B202EC24198C399A58B6EA4E /* HermesMonitorApp.swift */; };
-		24CE2B9AFD8B8DAFDBBFA7D6 /* QuestionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC28B710B47DB1DDE7154C5 /* QuestionHandler.swift */; };
 		65CF87F6CCCEE2D742CCFF80 /* FileDropHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1FF4D7B627271FFDA9746E /* FileDropHandler.swift */; };
+		94C19E2C1184E78C18C019CE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39943C2EAAA6D63C78E067E /* SettingsView.swift */; };
 		BE8895FD93425E7E1C4521DE /* HermesStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F945CD6854F04FEF37E375F4 /* HermesStatus.swift */; };
 		D02E5EF6C41B7E25F619A613 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 289EC071AA245A6F4517D377 /* AppIcon.icns */; };
 		D1CEE931FDC6D3568E81021E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 555905D0C603CC6DAC57C168 /* Assets.xcassets */; };
@@ -17,15 +19,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0467F7E85D2861F89591251E /* QuestionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionHandler.swift; sourceTree = "<group>"; };
+		21877B3B77A956F9EAE5F0D7 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		289EC071AA245A6F4517D377 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
 		555905D0C603CC6DAC57C168 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9424A95BA2C8B29587A2A5E0 /* HermesMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HermesMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B202EC24198C399A58B6EA4E /* HermesMonitorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesMonitorApp.swift; sourceTree = "<group>"; };
 		BE1FF4D7B627271FFDA9746E /* FileDropHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDropHandler.swift; sourceTree = "<group>"; };
+		C39943C2EAAA6D63C78E067E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C71275356F95E5C3217A8703 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F945CD6854F04FEF37E375F4 /* HermesStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesStatus.swift; sourceTree = "<group>"; };
 		FFB04A1C8031114ACD73C58B /* WidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetView.swift; sourceTree = "<group>"; };
-		7FC28B710B47DB1DDE7154C5 /* QuestionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -37,8 +41,10 @@
 				B202EC24198C399A58B6EA4E /* HermesMonitorApp.swift */,
 				F945CD6854F04FEF37E375F4 /* HermesStatus.swift */,
 				C71275356F95E5C3217A8703 /* Info.plist */,
+				21877B3B77A956F9EAE5F0D7 /* NotificationManager.swift */,
+				0467F7E85D2861F89591251E /* QuestionHandler.swift */,
+				C39943C2EAAA6D63C78E067E /* SettingsView.swift */,
 				FFB04A1C8031114ACD73C58B /* WidgetView.swift */,
-				7FC28B710B47DB1DDE7154C5 /* QuestionHandler.swift */,
 				DB22E1ACF686D55536631A25 /* Resources */,
 			);
 			path = HermesMonitor;
@@ -142,8 +148,10 @@
 				65CF87F6CCCEE2D742CCFF80 /* FileDropHandler.swift in Sources */,
 				61C41BA0D715B7167F78B870 /* HermesMonitorApp.swift in Sources */,
 				BE8895FD93425E7E1C4521DE /* HermesStatus.swift in Sources */,
+				418FE3EFDC85659DF34334B5 /* NotificationManager.swift in Sources */,
+				5C1F8DB77AE2B1B799D52CF9 /* QuestionHandler.swift in Sources */,
+				94C19E2C1184E78C18C019CE /* SettingsView.swift in Sources */,
 				FB79598379CF802DF27FE87C /* WidgetView.swift in Sources */,
-				24CE2B9AFD8B8DAFDBBFA7D6 /* QuestionHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,7 +283,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				INFOPLIST_FILE = HermesMonitor/Info.plist;
 				INFOPLIST_KEY_LSUIElement = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -283,7 +291,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.heavry.hermes-monitor";
 				PRODUCT_NAME = "Hermes Monitor";
 				SDKROOT = macosx;
@@ -297,7 +305,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				INFOPLIST_FILE = HermesMonitor/Info.plist;
 				INFOPLIST_KEY_LSUIElement = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -305,7 +313,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.heavry.hermes-monitor";
 				PRODUCT_NAME = "Hermes Monitor";
 				SDKROOT = macosx;

@@ -5,6 +5,7 @@ struct WidgetView: View {
     @EnvironmentObject var monitor: StatusMonitor
     @EnvironmentObject var dropHandler: FileDropHandler
     @EnvironmentObject var questionHandler: QuestionHandler
+    @EnvironmentObject var notificationManager: NotificationManager
     @State private var isHovering = false
     @State private var showList = false
     @State private var isRefreshing = false
@@ -45,6 +46,8 @@ struct WidgetView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(8)
+        .opacity(monitor.tasks.isEmpty ? 0.6 : 1.0)
+        .animation(.easeInOut(duration: 0.3), value: monitor.tasks.isEmpty)
         .onDrop(of: [.fileURL], isTargeted: $dropHandler.isDropping) { providers in
             let serialQueue = DispatchQueue(label: "com.heavry.drop.urls")
             var urls: [URL] = []
@@ -307,6 +310,15 @@ struct WidgetView: View {
                     .foregroundColor(.orange.opacity(0.7))
                     .help("Watcher 离线，正在尝试重启...")
             }
+
+            // Mute button
+            Button(action: { notificationManager.toggleMute() }) {
+                Image(systemName: notificationManager.isMuted ? "speaker.slash" : "speaker.wave.2")
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundColor(notificationManager.isMuted ? .red.opacity(0.7) : .secondary.opacity(0.6))
+            }
+            .buttonStyle(.plain)
+            .help(notificationManager.isMuted ? "已静音，点击取消" : "点击静音")
 
             // Refresh button
             Button(action: {
